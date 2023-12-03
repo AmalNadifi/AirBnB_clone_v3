@@ -4,11 +4,10 @@ The following script creates a Flask app,
 and registers the blueprint 'api_views' to the Flask instance app
 """
 
-
+from models import storage
 from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
-from models import storage
 from api.v1.views import app_views
 
 
@@ -17,8 +16,6 @@ app = Flask(__name__)
 
 # Enabling CORS and allowing for origins:
 CORS(app, resources={r'/api/v1/*': {'origins': '0.0.0.0'}})
-
-
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
@@ -33,7 +30,6 @@ def teardown_engine(exception):
 
 
 # Updated comment for error handler
-
 @app.errorhandler(404)
 def not_found(error):
     """
