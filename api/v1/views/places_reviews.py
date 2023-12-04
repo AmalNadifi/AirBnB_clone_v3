@@ -17,7 +17,7 @@ from models import storage
 # Retrieving all Review objects of a Place
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def get_reviews_by_place(place_id):
+def reviews_by_place(place_id):
     '''
     This method retrieves the list of all Review objects of a Place
 
