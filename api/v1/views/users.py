@@ -13,13 +13,13 @@ from models import storage
 # Retrieving all User objects
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def getting_all_users():
-    '''
+    """
     This method retrieves the list of all User objects
 
 
     Returns:
     JSON: A list of dictionaries representing User objects.
-    '''
+    """
     users = storage.all(User).values()
     return jsonify([user.to_dict() for user in users])
 
@@ -27,7 +27,7 @@ def getting_all_users():
 # Retrieving a specific User object by ID
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def getting_user(user_id):
-    '''
+    """
     This method retrieves a User object
 
     Args:
@@ -38,7 +38,7 @@ def getting_user(user_id):
 
     Raises:
         404: If the User object is not found.
-    '''
+    """
     user = storage.get(User, user_id)
     if user:
         return jsonify(user.to_dict())
@@ -49,7 +49,7 @@ def getting_user(user_id):
 # Deleting a specific User object by ID
 @app_views.route('/users/<user_id>', methods=['DELETE'])
 def deleting_user(user_id):
-    '''
+    """
     This method deletes a User object
 
     Args:
@@ -60,7 +60,7 @@ def deleting_user(user_id):
 
     Raises:
         404: If the User object is not found.
-    '''
+    """
     user = storage.get(User, user_id)
     if user:
         storage.delete(user)
@@ -73,7 +73,7 @@ def deleting_user(user_id):
 # Creating a new User object
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def creating_user():
-    '''
+    """
     This method creates a User object
 
     Returns:
@@ -82,7 +82,7 @@ def creating_user():
     Raises:
         400: If the request data is not in JSON format
         or 'email'/'password' keys are missing.
-    '''
+    """
     if not request.get_json():
         abort(400, 'Not a JSON')
 
@@ -98,7 +98,7 @@ def creating_user():
 # Updating an existing User object by ID
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def updating_user(user_id):
-    '''
+    """
     This method updates a User object.
 
     Args:
@@ -110,7 +110,7 @@ def updating_user(user_id):
     Raises:
         404: If the User object is not found.
         400: If the request data is not in JSON format.
-    '''
+    """
     user = storage.get(User, user_id)
     if user and request.get_json():
         data = request.get_json()
@@ -127,23 +127,23 @@ def updating_user(user_id):
 # Error Handlers:
 @app_views.errorhandler(404)
 def not_found(error):
-    '''
+    """
     Returns 404: Not Found.
 
     Returns:
         JSON: A dictionary with the 'error' key set to 'Not found'.
-    '''
+    """
     response = {'error': 'Not found'}
     return jsonify(response), 404
 
 
 @app_views.errorhandler(400)
 def bad_request(error):
-    '''
+    """
     Returns a Bad Request message for illegal requests to the API.
 
     Returns:
         JSON: A dictionary with the 'error' key set to 'Bad Request'.
-    '''
+    """
     response = {'error': 'Bad Request'}
     return jsonify(response), 400
